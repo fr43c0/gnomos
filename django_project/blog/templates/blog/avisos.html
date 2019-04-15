@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container">
+        <h2 style='display: inline-block;text-decoration:underline;''>Quadro de Avisos:</h2>
+        {% if user.is_superuser %}
+        <a style= ' margin-left: 20%;right:0;'type="submit" class='btn btn-primary' href="{% url 'avisos-create' %}">Enviar novo aviso</a>
+        
+        <!-- <input style='display: inline-block; position:absolute; right:0;'type="submit" class='btn btn-primary'  value="Enviar novo aviso"> -->
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </form>
+        
+        {% endif %}
+</div>
+   
+
+    {% for a in avisos %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ a.author.profile.image.url }}">
+            <div class="media-body">
+                    <div class="article-metadata">
+                        <small class="text-muted">{{ a.date_posted|date:"F d, Y" }}</small>
+                    </div>
+                    {% if user.is_superuser %}
+                    <h3><a class="article-title" href="{% url 'avisos-detail' a.id %}">{{ a.title }}</a></h3>
+                    {% else %}
+                    <h3 class="article-title">{{ a.title }}</h3>
+                    {% endif %}
+                    <div class='container'style='border-style: solid;'>
+                            {% if a.imagem %}
+                            <div class="container jumbotron"style='margin-top:10px;border-style: groove;background-color: white;'>
+                                    <img src= '{{ a.imagem.url }}'  alt="falha ao carregar imagem tem que aprender isso!">
+                                
+                            </div>
+                            
+                            <a href="{{a.link}}"> <p class="article-content">{{ a.link}}</p></a> 
+                             <p class="article-content">{{ a.content}}</p>
+                    
+                            {% endif %}
+                            {% if a.link %}
+                            <a href="{{a.link}}"> <p class="article-content">{{ a.link}}</p></a> 
+                            {% endif %}
+                            <p class="article-content">{{ a.content}}</p>
+                    </div>
+            </div>
+                <!-- <a class="article-title;height:auto; color:rgb(0, 162, 255);" href="{{post.e_status.url|safe}}">{{a.url|safe}}</a> -->
+            
+        </article>
+    {% endfor %}
+   
+{% endblock content %}

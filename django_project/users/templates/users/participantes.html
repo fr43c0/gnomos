@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h5>Usuários participando:</h5>
+<br>
+<ul>
+    {% for participante in participantes %}
+    <li><h5>Nome: {{participante|title}}</h5> email {{participante.email}}</li>
+    {% endfor %}
+</ul>
+  
+{% endblock content %}

@@ -1,0 +1,58 @@
+from django.urls import path
+from .views import (
+    PostListView,
+    PostDetailView,
+    PostCreateView,
+    PostUpdateView,
+    PostDeleteView,
+    UserPostListView,
+    EmailCreateView,
+    EmailListView,
+    EmailDeleteView,
+    EmailDetailView,
+    ParticipantesTemplateView,
+    DocsView,DocDeleteView,DocDetailView,
+    AvisosListView,
+    AvisosDetailView,
+    AvisosCreateView,
+    AvisosUpdateView,
+    AvisosDeleteView,
+    VideosListView,
+    DocDeleteView
+)
+from . import views
+
+
+urlpatterns = [
+
+    path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
+    path('novo_gnomo', EmailCreateView.as_view(), name='novo'),
+    path('avisos',AvisosListView.as_view(), name='avisos'),
+    path('avisos/<int:pk>/', AvisosDetailView.as_view(), name='avisos-detail'), 
+    path('avisos/new/', AvisosCreateView.as_view(), name='avisos-create'),
+    path('avisos/<int:pk>/update/', AvisosUpdateView.as_view(), name='avisos-update'),
+    path('avisos/<int:pk>/delete/', AvisosDeleteView.as_view(), name='avisos-delete'),
+    path('about/', views.about, name='blog-about'),
+    path('', PostListView.as_view(), name='blog-home'),
+    path('videos', VideosListView.as_view(), name='blog-videos'),
+    path('imagens', views.imagens, name='blog-imagens'),
+   # path('', views.home, name='blog-home'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'), 
+    path('post/new/', PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
+    path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
+    path('about/', views.about, name='blog-about'),
+    path('permitidos/',EmailListView.as_view(),name='permitidos'),
+    path('permitidos/<int:pk>/',EmailDetailView.as_view(),name='detalhe'),
+    path('deletar/<int:pk>/',EmailDeleteView.as_view(),name='deletar'),
+    path('novo/',EmailCreateView.as_view(),name='novo'),
+    path('participantes/',ParticipantesTemplateView.as_view(),name='participantes'),
+    path('appnews/', views.abrePag, name='blog-appnews'),
+    path('thumb/', views.thumb, name='thumb'),
+    #path('avisos/', views.avisos, name='blog-avisos'),
+    path('up/',views.model_form_upload, name='upload'),
+    path('arquivos/', DocsView.as_view(), name='arquivos'),
+    path('arquivos/<int:pk>/delete/', DocDeleteView.as_view(), name='doc-delete'),
+    path('arquivos/<int:pk>/', DocDetailView.as_view(), name='doc-detail'),
+   # path('novo_aviso/', views.avisos_form, name='avisos_form'),
+]

@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div class="container">
+
+            <div class="jumbotron">
+                    <div class="jumbotron">
+                            <h4>Leia sem bloqueio:</h4>
+                            <p>O Globo, Estadão, Folha, e outros...</p>
+                            <form  method="post">
+                                    {% csrf_token %}
+                                    <p><label for="url">Link da matéria:</label> <input style='width:50%' type="url" name="url" maxlength="254" required id="id_url"></p>
+                                    <input type="submit" class='btn btn-primary'  value="mostrar conteudo">
+                                </form>
+                    </div>
+            </div>
+
+        </div>
+{% endblock content %}

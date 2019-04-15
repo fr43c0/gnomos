@@ -1,0 +1,78 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% for post in posts %}
+       
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <div class="media-body">
+                    <div class="article-metadata">
+                          <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                          <small class="text-muted">{{ post.date_posted|date:"d \d\e F, Y" }}</small>
+                    </div>
+                    <h2 style="font-family: 'Open Sans Condensed', sans-serif;"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                    {% if post.e_status  %}
+                    <!-- soluçao do problema de configuraçao do tamanho do video (https://blog.theodo.fr/2018/01/responsive-iframes-css-trick/) -->
+                      <div class="container" 
+                            style='position: relative;
+                            overflow: hidden; 
+                            padding-top: 55%;'>
+
+                          <iframe  style='position: absolute;
+                                          top: 0;
+                                          left: 0;
+                                          width: 90%;
+                                          height: 100%;
+                                          margin-bottom:10px;
+                                          border: 0;' 
+                                    src="{{post.e_status.url|safe}}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+                          </iframe>
+                        
+                          
+                        </div>
+                        <div>
+                            <a  style='  color:rgb(0, 162, 255);'class="" href="{{post.e_status.url|safe}}">Site do vídeo</a>
+                      
+                        </div>
+                        <h1>{{e}}</h1>
+                    {% endif %}
+                
+                    {% if post.link_og %}
+                            <div class="container ">
+                                
+                                <h4>{{post.titulo_og|safe}}</h4>
+                                <img  style='width:100% !important; height:auto;' src="{{post.img_og|safe}}" alt="Falha ao carregar imagem" srcset="">
+                                <a style='width:100% !important; height:auto;'  href="{{post.link_og|safe}}">{{post.descricao_og|safe}}</a> 
+                                <small>
+                                  <p style='text-decoration: underline;font-size:smaller'><a href="{{post.link_og|safe}}"><i>{{post.origem_og|safe}}</i></a> 
+                                </small>
+                                
+                              </div>
+                    {% endif %}
+                <p class="article-content">{{ post.content}}</p>
+            </div>
+        </article>
+    {% endfor %}
+    {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+              <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+    {% endif %}
+{% endblock content %}

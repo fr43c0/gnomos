@@ -1,0 +1,30 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<h2>Arquivos 
+    <span style='margin-left:25px;'><a href="{% url 'upload' %}" target="_blank" class="btn btn-success btn-sm">Novo Upload</a></span>
+</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for arq in  arquivos %}
+            <tr>
+                <td>{{arq.uploaded_at|date:'Y-m-d'}}</td>
+                <td>{{arq.titulo|title}}</td>
+                <td>{{arq.autor|title}}</td>
+                <td>
+                    <a href="{{ arq.document.url }}" target="_blank" class="btn btn-primary btn-sm">Abrir</a>
+
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
