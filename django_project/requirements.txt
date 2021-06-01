@@ -13,4 +13,4 @@ pytz==2018.9
 requests==2.21.0
 rerequests==1.0.0b0
 soupsieve==1.9
-urllib3==1.24.2
+urllib3==1.26.5
